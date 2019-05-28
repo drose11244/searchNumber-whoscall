@@ -26,10 +26,11 @@ desired_caps['platformName'] = 'Android'
 # Check your android version.
 desired_caps['platformVersion'] = '5.0'
 
-# Chose your device real or emulator.
+# Chose your device real or emulator
 # desired_caps['deviceName'] = 'emulator'
-desired_caps['deviceName'] = 'YT9116ME0E'
-# desired_caps['udid'] = 'E2363'
+
+# Typing your phoen's devicename
+desired_caps['deviceName'] = ''
 
 desired_caps['app'] = PATH(
     '../apps/whoscall-6.33.apk'
@@ -38,7 +39,7 @@ desired_caps['app'] = PATH(
 
 desired_caps['appPackage'] = 'gogolook.callgogolook2'
 desired_caps['appActivity'] = '.main.MainActivity'
-print("init...", end="")
+print("init...", end='')
 
 dr = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 
