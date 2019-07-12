@@ -1,0 +1,2 @@
+all:android_real_devices.py
+	python3 android_real_devices.py

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="renderer.js"></script>
+  <!-- You can also require other files to run in this process -->
+  <title>AutomationCheckPhoneNumber</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h2>電話號碼自動查詢（Whosacall專用）</h2>
+        <div class="row">
+          <div class="col-md-6  col-lg-6">
+            <input type="file" id="input" onchange="handleFiles(this.files)">
+          </div>
+          <div class="col-md-6  col-lg-6">
+            <button>上傳</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2  col-lg-2">
+        <p>進度:</p>
+      </div>
+      <div class="col-md-10  col-lg-10">
+        <div class="progress">
+          <div id="progressID" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+            aria-valuemax="100" style="height: 2rem; width: 10%;">
+            <p id="progressIDfile">10/100</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-12 col-lg-12 text-right">
+      <button>下載</button>
+    </div>
+
+  </div>
+</body>
+
+</html>
