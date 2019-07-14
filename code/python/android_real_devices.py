@@ -25,7 +25,7 @@ writesheet.title = 'Sheet1'
 # Function
 
 def consoleLog(string):
-    print(str(string))
+    print("test_"+str(string))
     sys.stdout.flush()
 
 
@@ -57,30 +57,6 @@ def getCountBarLength(total):
 def PATH(p): return os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
-
-
-desired_caps = {}
-desired_caps['platformName'] = 'Android'
-# Check your android version.
-desired_caps['platformVersion'] = '5.0'
-
-# Chose your device real or emulator
-# desired_caps['deviceName'] = 'emulator'
-
-# Typing your phoen's devicename
-# you can input $adb devices to get device name
-desired_caps['deviceName'] = 'YT911ME0E'
-
-desired_caps['app'] = PATH(
-    '../../apps/whoscall-6.33.apk'
-    # '../apps/ApiDemos-debug.apk'
-)
-
-desired_caps['appPackage'] = 'gogolook.callgogolook2'
-desired_caps['appActivity'] = '.main.MainActivity'
-# print("init...", end='')
-
-dr = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 
 
 def recognizing():
@@ -162,35 +138,31 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        desired_caps = {}
+        desired_caps['platformName'] = 'Android'
+        # Check your android version.
+        desired_caps['platformVersion'] = '5.0'
 
+        # Chose your device real or emulator
+        # desired_caps['deviceName'] = 'emulator'
 
-# processbar(9, 1)
-# time.sleep(2)
-# processbar(18, 2)
-# processbar(27, 3)
-# processbar(36, 4)
-# processbar(100, 12)
-# time.sleep(2)
+        # Typing your phoen's devicename
+        # you can input $adb devices to get device name
+        desired_caps['deviceName'] = 'YT911ME0E'
 
+        desired_caps['app'] = PATH(
+            '../../apps/whoscall-6.33.apk'
+            # '../apps/ApiDemos-debug.apk'
+        )
 
-# print("python: " + getfilePath)
-# print("width_" + str("10%"))
-# print("amount_"+str(3)+"/"+str(readsheet.max_row))
-# sys.stdout.flush()
-# time.sleep(2)
+        desired_caps['appPackage'] = 'gogolook.callgogolook2'
+        desired_caps['appActivity'] = '.main.MainActivity'
+        # print("init...", end='')
 
-# print("width_" + str("50%"))
-# print("amount_"+str(10)+"/"+str(readsheet.max_row))
-# sys.stdout.flush()
-# time.sleep(2)
+        dr = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
 
-# print(str(3)+"/"+str(readsheet.max_row))
-# sys.stdout.flush()
-# time.sleep(2)
+        main()
 
-# print("width_" + str("100%"))
-# print("amount_" + str(12) + "/" + str(readsheet.max_row))
-# print("done_")
-# sys.stdout.flush()
-# time.sleep(2)
+    except:
+        errorStatus("device")
