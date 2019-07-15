@@ -1,10 +1,11 @@
-#coding = utf-8
+# coding = utf-8
 import os
 import sys
 from appium import webdriver
 from time import sleep
 from openpyxl import load_workbook, Workbook
 import math
+import random
 
 
 # Read xlsx
@@ -64,6 +65,8 @@ def recognizing():
 
         processBarLength = 0
         processbar(4, 0)
+        fileName = random.randint(11111111, 99999999)
+        # fileName = random.sample('zyxwvutsrqponmlkjihgfedcba', 10)
 
         for i in range(1, readsheet.max_row+1):
             getValue = readsheet.cell(row=i, column=1).value
@@ -85,13 +88,26 @@ def recognizing():
             text = result.text
 
             sleep(5)
-            number = 'A'+str(i)
-            writesheet[number] = getValue
 
-            number = 'B'+str(i)
-            writesheet[number] = text
-            # print(text)
-            workbook.save('test1.xlsx')
+            # consoleLog(text)
+            # consoleLog(getValue)
+
+            # get phoneNumber
+            writesheet.cell(row=i, column=1).value = getValue
+
+            # number = 'B'+str(i)
+            # writesheet[number] = text
+            # if (str(getValue) == str(text)):
+            #     text = ' #N/A'
+            #     consoleLog("same")
+
+            writesheet.cell(row=i, column=2).value = text
+
+            resultFileName = str(fileName)+".xlsx"
+            workbook.save(filename='../done/'+resultFileName)
+
+            # workbook.save('../done/'+resultFileName)
+
             sleep(1)
 
             dr.find_element_by_id(

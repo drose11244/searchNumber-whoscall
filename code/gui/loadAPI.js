@@ -1,4 +1,5 @@
 var { PythonShell } = require('python-shell')
+var exec = require('child_process').exec
 var path = require("path")
 var $ = require('jquery')
 var fs = require('fs')
@@ -26,7 +27,8 @@ function errorStatus(status) {
     length = "0%";
     processBarStatus(status);
     processBarLength(length);
-    $("#uploadFileID").attr("disabled", false);
+    // $("#uploadFileID").attr("disabled", false);
+    window.location.reload();
 }
 
 
@@ -74,7 +76,6 @@ function appium(filePath) {
                     break;
                 case "done":
                     console.log("done");
-                    // swal("成功囉!!!", "", "success")
                     swal({
                         title: "恭喜！！！",
                         text: "檔案已搜尋完畢。",
@@ -86,6 +87,10 @@ function appium(filePath) {
                             if (info) {
                                 // Success
                                 $("#uploadFileID").attr("disabled", false);
+                                // let download = path.join(__dirname + "../../done/")
+                                // exec('explorer.exe /select,"E:\\Workspace\\Java"')
+                                // exec('xdg-open ' + download)
+                                window.location.reload()
                                 console.log("success")
 
                             } else {
@@ -217,4 +222,12 @@ function restartUploadFile() {
                 console.log("cancel")
             }
         });
+}
+
+
+function openfolder() {
+    // exec('explorer.exe /select,"E:\\Workspace\\Java"')
+    let download = path.join(__dirname + "../../done/")
+    console.log("open " + download)
+    exec('xdg-open /home/bigrain/Programs/python/electron/searchNumber-whoscall/done')
 }
