@@ -22,13 +22,16 @@
                         <hr>
                     </div>
                     <div class="col-md-6  col-lg-6">
-                        <!-- <button onclick="stopProgram()" class="btn btn-danger">取消 / 重新上傳 </button> -->
                         <div class="col-md-6 col-lg-6">
-                            <button id="stopProcess" class="btn btn-primary" onclick="openfolder()">開啟下載資料夾</button>
+                            <button id="stopProcess" class="btn btn-info" onclick="openfolder()">開啟下載資料夾</button>
                             <hr>
                         </div>
                         <div class="col-md-6 col-lg-6">
-                            <button id="stopProcess" class="btn btn-danger" onclick="stopProgram()">取消 / 重新上傳</button>
+                            <button id="stopProcess" class="btn btn-danger" onclick="stopProgram()">中止程式</button>
+                            <hr>
+                        </div>
+                        <div class="col-md-6 col-lg-6">
+                            <button id="stopProcess" class="btn btn-primary" onclick="clearTmp()">清除暫存檔</button>
                         </div>
                     </div>
                 </div>
@@ -46,15 +49,8 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="col-md-2  col-lg-2">
-                <span id="progressIDfile" style="color: black;">0%</span>
-            </div> -->
+
         </div>
-        <!-- .<div class="row">
-            <div class="col-md-12 col-lg-12 text-right">
-                <button>下載</button>
-            </div>
-        </div> -->
 
     </div>
 </body>

@@ -6,24 +6,10 @@ from time import sleep
 from openpyxl import load_workbook, Workbook
 import math
 import random
-
-
-# Read xlsx
-
-getfilePath = sys.argv[1]
-loadWorkbook = load_workbook(getfilePath)
-
-# loadWorkbook = load_workbook('phoneNumberTest.xlsx')
-sheetnames = loadWorkbook.get_sheet_names()
-readsheet = loadWorkbook.get_sheet_by_name(sheetnames[0])
-
-# create xlsx and typing value.
-workbook = Workbook()
-writesheet = workbook.active
-writesheet.title = 'Sheet1'
-
+import string
 
 # Function
+
 
 def consoleLog(string):
     print("test_"+str(string))
@@ -31,7 +17,8 @@ def consoleLog(string):
 
 
 def errorStatus(status):
-    print("error_"+str(status))
+    print("error_" + str(status))
+    dr.close_app()
 
 
 def processbar(barLength, amount):
@@ -39,6 +26,7 @@ def processbar(barLength, amount):
     if (barLength >= 100):
         setbarLength = 100
         bar = str(setbarLength) + "%"
+        dr.close_app()
         print("done_")
 
     bar = str(barLength) + "%"
@@ -54,7 +42,13 @@ def getCountBarLength(total):
     return result
 
 
+def randomString(stringLength=20):
+    letters = string.ascii_lowercase
+    return ''.join(random.choice(letters) for i in range(stringLength))
+
 # Test Device
+
+
 def PATH(p): return os.path.abspath(
     os.path.join(os.path.dirname(__file__), p)
 )
@@ -65,8 +59,7 @@ def recognizing():
 
         processBarLength = 0
         processbar(4, 0)
-        fileName = random.randint(11111111, 99999999)
-        # fileName = random.sample('zyxwvutsrqponmlkjihgfedcba', 10)
+        fileName = randomString(10)
 
         for i in range(1, readsheet.max_row+1):
             getValue = readsheet.cell(row=i, column=1).value
@@ -79,7 +72,8 @@ def recognizing():
             sleep(1)
             dr.find_element_by_id(
                 'gogolook.callgogolook2:id/et_search_keyword').click()
-            dr.press_keycode(66)
+            # dr.press_keycode(66)
+            dr.tap([(0, 753), (480, 792)], 100)
             sleep(1)
 
             # print("type Enter ...")
@@ -94,19 +88,11 @@ def recognizing():
 
             # get phoneNumber
             writesheet.cell(row=i, column=1).value = getValue
-
-            # number = 'B'+str(i)
-            # writesheet[number] = text
-            # if (str(getValue) == str(text)):
-            #     text = ' #N/A'
-            #     consoleLog("same")
-
             writesheet.cell(row=i, column=2).value = text
 
-            resultFileName = str(fileName)+".xlsx"
-            workbook.save(filename='../done/'+resultFileName)
+            resultFileName = str(fileName) + ".xlsx"
 
-            # workbook.save('../done/'+resultFileName)
+            workbook.save(filename='done/'+resultFileName)
 
             sleep(1)
 
@@ -119,7 +105,6 @@ def recognizing():
 
     except:
         errorStatus("file")
-        dr.close_app()
 
 
 def init():
@@ -145,7 +130,6 @@ def init():
     except:
         # print("error_init")
         errorStatus("init")
-        dr.close_app()
 
 
 def main():
@@ -155,17 +139,34 @@ def main():
 
 if __name__ == "__main__":
     try:
+
+        # Read xlsx
+
+        getfilePath = sys.argv[1]
+        loadWorkbook = load_workbook(getfilePath)
+
+        # loadWorkbook = load_workbook('phoneNumberTest.xlsx')
+        sheetnames = loadWorkbook.get_sheet_names()
+        readsheet = loadWorkbook.get_sheet_by_name(sheetnames[0])
+
+        # create xlsx and typing value.
+        workbook = Workbook()
+        writesheet = workbook.active
+        writesheet.title = 'Sheet1'
+
         desired_caps = {}
         desired_caps['platformName'] = 'Android'
         # Check your android version.
-        desired_caps['platformVersion'] = '5.0'
+        # desired_caps['platformVersion'] = '5.0'
+        desired_caps['platformVersion'] = '4.4.4'
 
         # Chose your device real or emulator
         # desired_caps['deviceName'] = 'emulator'
 
         # Typing your phoen's devicename
         # you can input $adb devices to get device name
-        desired_caps['deviceName'] = 'YT911ME0E'
+        # desired_caps['deviceName'] = 'YT911ME0E'
+        desired_caps['deviceName'] = '0123456789ABCDEF'
 
         desired_caps['app'] = PATH(
             '../../apps/whoscall-6.33.apk'

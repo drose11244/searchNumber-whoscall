@@ -1,17 +1,14 @@
 var { PythonShell } = require('python-shell')
-var exec = require('child_process').exec
+var spawn = require('child_process').spawn
+var exec = require("child_process").exec;
 var path = require("path")
 var $ = require('jquery')
 var fs = require('fs')
-// import swal from 'sweetalert';
 var sweetalert = require('sweetalert')
-
 
 var length;
 var status;
 var amount;
-
-
 
 function processBarLength(barLength) {
     $('#progressID').width(barLength);
@@ -27,8 +24,8 @@ function errorStatus(status) {
     length = "0%";
     processBarStatus(status);
     processBarLength(length);
-    // $("#uploadFileID").attr("disabled", false);
-    window.location.reload();
+    $("#uploadFileID").attr("disabled", false);
+    $('#uploadFileID').replaceWith('<input id="uploadFileID" type="file" id="input" onchange="handleFiles(this.files)">');
 }
 
 
@@ -42,6 +39,7 @@ function appium(filePath) {
         }
 
         let pyshell = new PythonShell('android_real_devices.py', options);
+
         pyshell.on('message', function (message) {
 
             let getDataIndexOf = message.indexOf("_");
@@ -131,6 +129,17 @@ function appium(filePath) {
                     break;
             }
         })
+
+
+        pyshell.end(function (err) {
+            if (err) {
+                console.log(err);
+            }
+            console.log("close APP.")
+        });
+
+
+
     } catch (error) {
         status = "裝置有問題"
         errorStatus(status)
@@ -156,8 +165,8 @@ function handleFiles(file) {
     // console.log("now")
     // console.log(__dirname)
 
-    $("#uploadFileID").attr("disabled", '');
 
+    $("#uploadFileID").attr("disabled", '');
     let current = path.join(__dirname, '../tmp/')
     let fileName = makeFileRadom(15) + file[0].name;
     let fileuploadPath = file[0].path;
@@ -180,6 +189,11 @@ function handleFiles(file) {
     } catch (error) {
         errorStatus("檔案上傳有問題(02)")
     }
+
+
+
+
+
 }
 
 
@@ -194,6 +208,7 @@ function stopProgram() {
         .then((willDelete) => {
             if (willDelete) {
                 // Success
+                // errorStatus("程式已中止")
                 // $("#uploadFileID").attr("disabled", false);
                 window.location.reload()
             } else {
@@ -226,8 +241,61 @@ function restartUploadFile() {
 
 
 function openfolder() {
+
+
     // exec('explorer.exe /select,"E:\\Workspace\\Java"')
     let download = path.join(__dirname + "../../done/")
-    console.log("open " + download)
-    exec('xdg-open /home/bigrain/Programs/python/electron/searchNumber-whoscall/done')
+    // let download = __dirname
+    // console.log("open " + download)
+    // exec('xdg-open ../../../../done/')
+
+    var open = spawn('xdg-open', [download]);
+
+    open.stdout.on('data', function (data) {
+        console.log('stdout: ' + data);
+    });
+
+    open.on('error', function (code) {
+        console.log('error with code ' + code);
+    });
+
+    open.on('close', function (code) {
+        console.log('closed with code ' + code);
+    });
+
+    open.on('exit', function (code) {
+        console.log('exited with code ' + code);
+    });
+
+}
+
+function clearTmp() {
+    // exec('explorer.exe /select,"E:\\Workspace\\Java"')
+    let tmpPath = path.join(__dirname + "../../tmp/")
+    tmpPath = tmpPath + "*"
+    // console.log(tmpPath)
+
+    let child = exec("rm -rf " + tmpPath, function (err, stdout, stderr) {
+        // Handle result
+        if (err) {
+            console.log("err")
+            console.log(err)
+            return 1;
+        }
+
+        if (stdout) {
+            console.log("stdout")
+            console.log(stdout)
+            return 0;
+        }
+
+        if (stderr) {
+            console.log("stderr")
+            console.log(stderr)
+            return 1;
+        }
+        console.log("done")
+
+    });
+
 }
