@@ -78,8 +78,8 @@ function appium(filePath) {
                         title: "恭喜！！！",
                         text: "檔案已搜尋完畢。",
                         icon: "success",
-                        buttons: true,
-                        dangerMode: true,
+                        // buttons: true,
+                        // dangerMode: true,
                     })
                         .then((info) => {
                             if (info) {
@@ -295,7 +295,6 @@ function clearTmp() {
             return 1;
         }
         console.log("done")
-
+        swal("清除完畢！！！", "", "success");
     });
-
 }
